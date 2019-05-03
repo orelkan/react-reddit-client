@@ -1,0 +1,15 @@
+.sub-reddit {
+    margin: 2em 7%;
+}
+
+.votes {
+    display: flex;
+    flex-direction: column;
+    margin-right: 2em;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
