@@ -36,8 +36,8 @@ function Votes(props) {
 
   return (
     <div className='votes'>
-      <IconButton style={{...styles.iconButton, ...upvoteColor}} aria-label='Upvote'
-      onClick={handleVote(VoteState.UPVOTE)} >
+      <IconButton style={{...styles.iconButton, ...upvoteColor}} 
+      aria-label='Upvote'onClick={handleVote(VoteState.UPVOTE)} >
         <UpVote/>
       </IconButton>
       
@@ -45,8 +45,8 @@ function Votes(props) {
         {props.votes + voteState}
       </Typography>
 
-      <IconButton style={{...styles.iconButton, ...downvoteColor}} aria-label='Downvote'
-      onClick={handleVote(VoteState.DOWNVOTE)}>
+      <IconButton style={{...styles.iconButton, ...downvoteColor}} 
+      aria-label='Downvote' onClick={handleVote(VoteState.DOWNVOTE)}>
         <DownVote/>
       </IconButton>
     </div>
