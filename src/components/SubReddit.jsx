@@ -8,10 +8,10 @@ import './Reddit.css';
 
 const styles = theme => ({
   progress: {
-    width: '12em !important',
-    height: '12em !important',
+    width: '8em !important',
+    height: '8em !important',
     position: 'relative',
-    left: 'calc(50% - 6em)',
+    left: 'calc(50% - 4em)',
     marginTop: '3em'
   }
 });
@@ -22,7 +22,7 @@ function SubReddit(props) {
 
   useEffect(() => {
     // Remove the 'www.' to cause a CORS error (and see the error state)
-    axios.get(`http://www.reddit.com/r/${props.subreddit}.json`)
+    axios.get(`https://www.reddit.com/r/${props.subreddit}.json`)
       .then(res => {
         // Transform the raw data by extracting the nested posts
         const posts = res.data.data.children.map(obj => obj.data);
@@ -33,7 +33,7 @@ function SubReddit(props) {
   }, []);
 
   const ErrorDisplay = props => (
-    <Typography variant="h2" gutterBottom>
+    <Typography variant="h3" gutterBottom>
       Error Occured: {props.error.message}
     </Typography>
   );
@@ -42,7 +42,7 @@ function SubReddit(props) {
   const isLoading = error == null && posts == null;
   return (
     <div className='sub-reddit'>
-      <Typography variant="h1" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {`/r/${props.subreddit}`}
       </Typography>
       {isLoading && <CircularProgress className={classes.progress}/>}

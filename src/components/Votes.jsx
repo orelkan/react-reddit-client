@@ -41,7 +41,7 @@ function Votes(props) {
         <UpVote/>
       </IconButton>
       
-      <Typography variant='h6' style={{...upvoteColor, ...downvoteColor}}>
+      <Typography variant='h5' style={{...upvoteColor, ...downvoteColor}}>
         {props.votes + voteState}
       </Typography>
 
