@@ -1,3 +1,7 @@
+body {
+    margin: 0
+}
+
 .sub-reddit {
     margin: 2em 7%;
 }
@@ -16,4 +20,8 @@ a {
 
 .post h5 {
     font-size: 13pt
+}
+
+.content{
+    margin-top: 5em
 }

@@ -30,7 +30,7 @@ function SubReddit(props) {
         setPosts(sortedPosts);
       })
       .catch(err => setError(err));
-  }, []);
+  }, [props.subreddit]);
 
   const ErrorDisplay = props => (
     <Typography variant="h3" gutterBottom>
