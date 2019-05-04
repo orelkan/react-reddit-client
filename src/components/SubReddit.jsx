@@ -28,8 +28,12 @@ function SubReddit(props) {
         const posts = res.data.data.children.map(obj => obj.data);
         const sortedPosts = _(posts).sortBy('ups').reverse().value();
         setPosts(sortedPosts);
+        setError(null);
       })
-      .catch(err => setError(err));
+      .catch(err => {
+        setError(err);
+        setPosts(null);
+      });
   }, [props.subreddit]);
 
   const ErrorDisplay = props => (
