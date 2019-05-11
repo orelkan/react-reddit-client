@@ -1,23 +1,35 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import { useSpring, animated, config } from "react-spring";
-import { Card, Typography, withStyles } from "@material-ui/core";
+import { Card, Typography } from "@material-ui/core";
 import Votes from "./Votes";
-import "./Reddit.css";
 
-const styles = {
-  card: {
-    minWidth: 275,
-    margin: "1em auto"
-  },
-  title: {
-    margin: "auto 0"
-  },
-  cardContent: {
-    display: "flex",
-    padding: "0.5em 1em"
+const card = css`
+  min-width: 275px;
+  margin: 1em auto;
+`;
+const title = css`
+  margin: auto 0;
+`;
+const cardContent = css`
+  display: flex;
+  padding: 0.5em 1em;
+`;
+const img = css`
+  margin: 1em 2em 1em 0;
+  width: auto;
+  max-height: 7em;
+`;
+const root = css`
+  h5 {
+    font-size: 13pt;
   }
-};
+  a {
+    text-decoration: none;
+    color: black;
+  }
+`;
 
 const calc = (x, y) => [
   -(y - window.innerHeight / 2) / 20,
@@ -26,8 +38,7 @@ const calc = (x, y) => [
 ];
 const trans = (x, y, s) => `perspective(1200px) rotateX(${x}deg) scale(${s})`;
 
-function Post(props) {
-  const { classes, post } = props;
+function Post({ post }) {
   const animationProps = useSpring({
     config: config.slow,
     opacity: 1,
@@ -40,21 +51,22 @@ function Post(props) {
   }));
 
   const postLink = `https://www.reddit.com${post.permalink}`;
-  const hasThumbnail = post.thumbnail !== 'self' && post.thumbnail !== 'spoiler';
+  const hasThumbnail = post.thumbnail.startsWith('http');
 
   return (
-    <animated.div className="post" style={animationProps}>
+    <animated.div css={root} style={animationProps}>
       <animated.div
         onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
         onMouseLeave={() => set({ xys: [0, 0, 1] })}
         style={{ transform: hoverProps.xys.interpolate(trans) }}
       >
-        <Card className={classes.card}>
-          <div className={classes.cardContent}>
+        <Card css={card}>
+          <div css={cardContent}>
             <Votes votes={post.ups} />
             {hasThumbnail && 
-            <img src={post.thumbnail} height={post.thumbnail_height}/>}
-            <Typography variant="h5" className={classes.title}>
+            <img src={post.thumbnail} height={post.thumbnail_height} 
+              alt='thumbnail' css={img}/>}
+            <Typography variant="h5" css={title}>
               <a href={postLink} target="_blank" rel="noopener noreferrer">
                 {post.title}
               </a>
@@ -70,4 +82,4 @@ Post.propTypes = {
   post: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Post);
+export default Post;

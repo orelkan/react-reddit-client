@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from "react";
+/** @jsx jsx */
+import { useState, useEffect } from "react";
+import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import axios from "axios";
 import _ from "lodash";
-import { Typography, CircularProgress, withStyles } from "@material-ui/core";
+import { Typography, CircularProgress } from "@material-ui/core";
 import Post from "./Post";
-import "./Reddit.css";
 
-const styles = theme => ({
-  progress: {
-    width: "8em !important",
-    height: "8em !important",
-    position: "relative",
-    left: "calc(50% - 4em)",
-    marginTop: "3em"
-  }
-});
+const root = css`
+  margin: 2em 7%;
+`;
+const progress = css`
+  width: 8em !important;
+  height: 8em !important;
+  position: relative;
+  left: calc(50% - 4em);
+  margin-top: 3em;
+`;
+
+const ErrorDisplay = props => (
+  <Typography variant="h3" gutterBottom>
+    Error Occured: {props.error.message}
+  </Typography>
+);
+
+ErrorDisplay.propTypes = {
+  error: PropTypes.object.isRequired
+};
 
 function SubReddit(props) {
   const [posts, setPosts] = useState(null);
@@ -40,20 +52,13 @@ function SubReddit(props) {
       });
   }, [props.subreddit]);
 
-  const ErrorDisplay = props => (
-    <Typography variant="h3" gutterBottom>
-      Error Occured: {props.error.message}
-    </Typography>
-  );
-
-  const { classes } = props;
   const isLoading = error == null && posts == null;
   return (
-    <div className="sub-reddit">
+    <div css={root}>
       <Typography variant="h2" gutterBottom>
         {`/r/${props.subreddit}`}
       </Typography>
-      {isLoading && <CircularProgress className={classes.progress} />}
+      {isLoading && <CircularProgress css={progress} />}
       {posts && posts.map(post => <Post post={post} key={post.id} />)}
       {error && <ErrorDisplay error={error} />}
     </div>
@@ -64,4 +69,4 @@ SubReddit.propTypes = {
   subreddit: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(SubReddit);
+export default SubReddit;
