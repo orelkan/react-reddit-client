@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/react-reddit-client/static/js/main.23a10202.chunk.js",
+    "main.js.map": "/react-reddit-client/static/js/main.23a10202.chunk.js.map",
+    "runtime~main.js": "/react-reddit-client/static/js/runtime~main.f1134d0a.js",
+    "runtime~main.js.map": "/react-reddit-client/static/js/runtime~main.f1134d0a.js.map",
+    "static/js/2.45c11f16.chunk.js": "/react-reddit-client/static/js/2.45c11f16.chunk.js",
+    "static/js/2.45c11f16.chunk.js.map": "/react-reddit-client/static/js/2.45c11f16.chunk.js.map",
+    "index.html": "/react-reddit-client/index.html",
+    "precache-manifest.47aed477dbcebc9cbbcae83d0e71c533.js": "/react-reddit-client/precache-manifest.47aed477dbcebc9cbbcae83d0e71c533.js",
+    "service-worker.js": "/react-reddit-client/service-worker.js"
+  }
+}
