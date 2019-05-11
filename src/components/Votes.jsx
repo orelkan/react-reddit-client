@@ -32,7 +32,7 @@ function getColorByState(voteState) {
     case VoteState.DOWNVOTE:
       return downvoteColor;
     default:
-      return "unset";
+      return 'inherit';
   }
 }
 
@@ -47,34 +47,30 @@ function Votes(props) {
   const currentColor = getColorByState(voteState);
   const upButtonCss = css`
     ${iconButtonCss};
-    color: ${voteState === VoteState.UPVOTE ? currentColor : 'unset'};
+    color: ${voteState === VoteState.UPVOTE ? currentColor : 'inherit'};
   `;
   const downButtonCss = css`
     ${iconButtonCss};
-    color: ${voteState === VoteState.DOWNVOTE ? currentColor : 'unset'};
+    color: ${voteState === VoteState.DOWNVOTE ? currentColor : 'inherit'};
+  `;
+  const textCss = css`
+    color: ${currentColor};
   `;
   return (
     <div css={root}>
       <IconButton
-        css={upButtonCss}
-        aria-label="Upvote"
+        css={upButtonCss} aria-label="Upvote" 
         onClick={handleVote(VoteState.UPVOTE)}
       >
         <UpVote />
       </IconButton>
 
-      <Typography
-        variant="h5"
-        css={css`
-          color: ${currentColor};
-        `}
-      >
+      <Typography variant="h5" css={textCss}>
         {props.votes + voteState}
       </Typography>
 
       <IconButton
-        css={downButtonCss}
-        aria-label="Downvote"
+        css={downButtonCss} aria-label="Downvote"
         onClick={handleVote(VoteState.DOWNVOTE)}
       >
         <DownVote />

@@ -5,6 +5,15 @@ import { useSpring, animated, config } from "react-spring";
 import { Card, Typography } from "@material-ui/core";
 import Votes from "./Votes";
 
+const root = css`
+  h5 {
+    font-size: 13pt;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+`;
 const card = css`
   min-width: 275px;
   margin: 1em auto;
@@ -20,15 +29,6 @@ const img = css`
   margin: 1em 2em 1em 0;
   width: auto;
   max-height: 7em;
-`;
-const root = css`
-  h5 {
-    font-size: 13pt;
-  }
-  a {
-    text-decoration: none;
-    color: black;
-  }
 `;
 
 const calc = (x, y) => [
