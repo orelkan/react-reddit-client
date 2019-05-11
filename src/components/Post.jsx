@@ -8,6 +8,7 @@ import Markdown from 'react-markdown';
 import Votes from "./Votes";
 import TitleAndMetadata from "./TitleAndMetadata";
 import Thumbnail from './Thumbnail';
+import Video from './Video';
 
 const root = css`
   h5 {
@@ -51,7 +52,9 @@ function Post({ post }) {
   const hasImage = ['.jpg', '.gif', '.png']
                   .some(ext => post.url.endsWith(ext));
   const hasText = post.selftext && post.selftext.length > 0;
-
+  // const hasVideo = post.is_video;
+  const hasVideo = post.media && post.media.reddit_video && 
+    post.media.reddit_video.fallback_url;
   return (
     <Grow in={true} css={root} timeout={800}>
       <Card css={card}>
@@ -61,7 +64,7 @@ function Post({ post }) {
           <Thumbnail src={post.thumbnail} 
             height={post.thumbnail_height} onClick={handleExpanded} />}
           <TitleAndMetadata post={post}/>
-          {(hasImage || hasText) && 
+          {(hasImage || hasText || hasVideo) && 
           <IconButton css={exapnd} onClick={handleExpanded} aria-expanded={expanded}>
             <ExpandMoreIcon/>
           </IconButton>}
@@ -69,6 +72,7 @@ function Post({ post }) {
         <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
           {hasImage && 
           <img src={post.url} alt='source' css={sourceImg}/>}
+          {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
           <div css={collapseContent}>
             {hasText && 
             <Typography variant='h5'>

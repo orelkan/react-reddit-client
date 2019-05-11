@@ -2,6 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import {Typography} from '@material-ui/core';
+import Markdown from 'react-markdown';
 
 const root = css`
   margin: auto 0;
@@ -20,7 +21,7 @@ function TitleAndMetadata({post}) {
     <div css={root}>
       <Typography variant="h5" css={title}>
         <a href={postLink} target="_blank" rel="noopener noreferrer">
-          {post.title}
+          <Markdown source={post.title}/>
         </a>
       </Typography>
       <div>
