@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles, Typography, IconButton } from '@material-ui/core';
-import UpVote from '@material-ui/icons/ExpandLess';
-import DownVote from '@material-ui/icons/ExpandMore';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { withStyles, Typography, IconButton } from "@material-ui/core";
+import UpVote from "@material-ui/icons/ExpandLess";
+import DownVote from "@material-ui/icons/ExpandMore";
 
 const styles = {
   iconButton: {
-    padding: '7px 0'
+    padding: "7px 0"
   },
   upvote: {
-    color: '#FF8b60'
+    color: "#FF8b60"
   },
   downvote: {
-    color: '#9494FF'
+    color: "#9494FF"
   }
 };
 
@@ -26,28 +26,33 @@ function Votes(props) {
   const [voteState, setVoteState] = useState(VoteState.NO_VOTE);
 
   const handleVote = nextState => () => {
-    if (nextState === voteState) 
-      setVoteState(VoteState.NO_VOTE);
+    if (nextState === voteState) setVoteState(VoteState.NO_VOTE);
     else setVoteState(nextState);
-  }
+  };
 
-  const upvoteColor = voteState === VoteState.UPVOTE ? styles.upvote : {}
-  const downvoteColor = voteState === VoteState.DOWNVOTE ? styles.downvote : {}
+  const upvoteColor = voteState === VoteState.UPVOTE ? styles.upvote : {};
+  const downvoteColor = voteState === VoteState.DOWNVOTE ? styles.downvote : {};
 
   return (
-    <div className='votes'>
-      <IconButton style={{...styles.iconButton, ...upvoteColor}} 
-      aria-label='Upvote'onClick={handleVote(VoteState.UPVOTE)} >
-        <UpVote/>
+    <div className="votes">
+      <IconButton
+        style={{ ...styles.iconButton, ...upvoteColor }}
+        aria-label="Upvote"
+        onClick={handleVote(VoteState.UPVOTE)}
+      >
+        <UpVote />
       </IconButton>
-      
-      <Typography variant='h5' style={{...upvoteColor, ...downvoteColor}}>
+
+      <Typography variant="h5" style={{ ...upvoteColor, ...downvoteColor }}>
         {props.votes + voteState}
       </Typography>
 
-      <IconButton style={{...styles.iconButton, ...downvoteColor}} 
-      aria-label='Downvote' onClick={handleVote(VoteState.DOWNVOTE)}>
-        <DownVote/>
+      <IconButton
+        style={{ ...styles.iconButton, ...downvoteColor }}
+        aria-label="Downvote"
+        onClick={handleVote(VoteState.DOWNVOTE)}
+      >
+        <DownVote />
       </IconButton>
     </div>
   );
@@ -55,6 +60,6 @@ function Votes(props) {
 
 Votes.propTypes = {
   votes: PropTypes.number.isRequired
-}
+};
 
 export default withStyles(styles)(Votes);

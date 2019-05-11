@@ -7,15 +7,12 @@ import './Reddit.css';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {main: red[800]},
-    // secondary: {
-    //   main: '#f44336',
-    // },
-  },
+    primary: {main: red[800]}
+  }
 });
 
-function App(props) {
-  const [subreddit, setSubreddit] = useState("reactjs");
+function App() {
+  const [subreddit, setSubreddit] = useState("all");
   function handleSubChange(event) {
     setSubreddit(event.target.value)
   }

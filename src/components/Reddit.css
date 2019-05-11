@@ -9,8 +9,8 @@ body {
 .votes {
     display: flex;
     flex-direction: column;
-    margin-right: 2em;
     text-align: center;
+    margin: auto 2em auto 0;
 }
 
 a {
@@ -24,4 +24,10 @@ a {
 
 .content{
     margin-top: 5em
+}
+
+.post img {
+    margin: 1em 2em 1em 0;
+    width: auto;
+    max-height: 7em;
 }
