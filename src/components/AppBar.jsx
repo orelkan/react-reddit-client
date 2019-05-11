@@ -103,6 +103,7 @@ function SearchAppBar(props) {
 
 SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  onSubredditChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SearchAppBar);

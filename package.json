@@ -17,6 +17,7 @@
     "lodash": "^4.17.11",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "react-markdown": "^4.0.8",
     "react-spring": "^8.0.20"
   },
   "scripts": {

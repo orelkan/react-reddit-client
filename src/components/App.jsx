@@ -6,6 +6,7 @@ import { StylesProvider } from "@material-ui/styles";
 import red from '@material-ui/core/colors/red';
 import SubReddit from './SubReddit';
 import AppBar from './AppBar';
+import CollapseDemo from './CollapseDemo';
 
 const theme = createMuiTheme({
   palette: {
