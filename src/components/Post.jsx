@@ -1,9 +1,11 @@
 /** @jsx jsx */
+import { useState } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
-import { useSpring, animated, config } from "react-spring";
-import { Card, Typography } from "@material-ui/core";
+import { Card, Typography, IconButton, Collapse, Grow } from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Votes from "./Votes";
+// import AnimatedHover from "./AnimatedHover";
 
 const root = css`
   h5 {
@@ -23,58 +25,59 @@ const title = css`
 `;
 const cardContent = css`
   display: flex;
-  padding: 0.5em 1em;
+  padding: 0.5em 3%;
 `;
-const img = css`
-  margin: 1em 2em 1em 0;
+const thumbnail = css`
+  margin: auto 4% auto 0;
   width: auto;
   max-height: 7em;
+  padding: 1em 0;
+`;
+const sourceImg = css`
+  max-height: 30em;
+  margin: auto 0;
+  display: block;
+  padding-bottom: 9%;
+`;
+const exapnd = css`
+  height: fit-content;
+  margin: auto 0 auto auto;
+`;
+const collapse = css`
+  display: flex;
+  justify-content: center;
 `;
 
-const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 20,
-  (x - window.innerWidth / 2) / 20,
-  1.1
-];
-const trans = (x, y, s) => `perspective(1200px) rotateX(${x}deg) scale(${s})`;
-
 function Post({ post }) {
-  const animationProps = useSpring({
-    config: config.slow,
-    opacity: 1,
-    paddingLeft: 0,
-    from: { opacity: 0, paddingLeft: 200 }
-  });
-  const [hoverProps, set] = useSpring(() => ({
-    xys: [0, 0, 1],
-    config: { mass: 5, tension: 350, friction: 40 }
-  }));
-
+  const [expanded, setExpanded] = useState(false);
+  const handleExpanded = () => setExpanded(!expanded);
+  
   const postLink = `https://www.reddit.com${post.permalink}`;
   const hasThumbnail = post.thumbnail.startsWith('http');
-
+  const isImage = post.url.endsWith('.jpg');
   return (
-    <animated.div css={root} style={animationProps}>
-      <animated.div
-        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-        onMouseLeave={() => set({ xys: [0, 0, 1] })}
-        style={{ transform: hoverProps.xys.interpolate(trans) }}
-      >
-        <Card css={card}>
-          <div css={cardContent}>
-            <Votes votes={post.ups} />
-            {hasThumbnail && 
-            <img src={post.thumbnail} height={post.thumbnail_height} 
-              alt='thumbnail' css={img}/>}
-            <Typography variant="h5" css={title}>
-              <a href={postLink} target="_blank" rel="noopener noreferrer">
-                {post.title}
-              </a>
-            </Typography>
-          </div>
-        </Card>
-      </animated.div>
-    </animated.div>
+    <Grow in={true} css={root} timeout={800}>
+      <Card css={card}>
+        <div css={cardContent}>
+          <Votes votes={post.ups} />
+          {hasThumbnail && 
+          <img src={post.thumbnail} height={post.thumbnail_height} 
+            alt='thumbnail' css={thumbnail}/>}
+          <Typography variant="h5" css={title}>
+            <a href={postLink} target="_blank" rel="noopener noreferrer">
+              {post.title}
+            </a>
+          </Typography>
+          {isImage && 
+          <IconButton css={exapnd} onClick={handleExpanded} aria-expanded={expanded}>
+            <ExpandMoreIcon/>
+          </IconButton>}
+        </div>
+        <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
+          <img src={post.url} alt='source' css={sourceImg}/>
+        </Collapse>
+      </Card>
+    </Grow>
   );
 }
 

@@ -13,7 +13,7 @@ const root = css`
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: auto 2em auto 0;
+  margin: auto 4% auto 0;
 `;
 const iconButtonCss = css`
   padding: 7px 0;
@@ -45,14 +45,12 @@ function Votes(props) {
   };
 
   const currentColor = getColorByState(voteState);
-  const upButtonCss = css`
+  const makeButtonCss = desiredButtonState => css`
     ${iconButtonCss};
-    color: ${voteState === VoteState.UPVOTE ? currentColor : 'inherit'};
+    color: ${voteState === desiredButtonState ? currentColor : 'inherit'};
   `;
-  const downButtonCss = css`
-    ${iconButtonCss};
-    color: ${voteState === VoteState.DOWNVOTE ? currentColor : 'inherit'};
-  `;
+  const upButtonCss = makeButtonCss(VoteState.UPVOTE);
+  const downButtonCss = makeButtonCss(VoteState.DOWNVOTE);
   const textCss = css`
     color: ${currentColor};
   `;

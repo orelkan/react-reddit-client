@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import axios from "axios";
-import _ from "lodash";
 import { Typography, CircularProgress } from "@material-ui/core";
 import Post from "./Post";
 
@@ -35,15 +34,11 @@ function SubReddit(props) {
   useEffect(() => {
     // Remove the 'www.' to cause a CORS error (and see the error state)
     axios
-      .get(`https://www.reddit.com/r/${props.subreddit}.json`)
+      .get(`https://www.reddit.com/r/${props.subreddit}/top.json`)
       .then(res => {
         // Transform the raw data by extracting the nested posts
         const posts = res.data.data.children.map(obj => obj.data);
-        const sortedPosts = _(posts)
-          .sortBy("ups")
-          .reverse()
-          .value();
-        setPosts(sortedPosts);
+        setPosts(posts);
         setError(null);
       })
       .catch(err => {
