@@ -70,7 +70,7 @@ function SubReddit(props) {
         .get(requestUrl + '?after=' + after)
         .then(res => {
           const morePosts = requestResToPosts(res);
-          setPosts(prevPosts => prevPosts.concat(morePosts));
+          setPosts(prevPosts => prevPosts && prevPosts.concat(morePosts));
           setLastRequestResult(res.data.data);
           setLoadingMore(false);
         })
