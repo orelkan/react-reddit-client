@@ -21,7 +21,8 @@ function TitleAndMetadata({post}) {
     <div css={root}>
       <Typography variant="h5" css={title}>
         <a href={postLink} target="_blank" rel="noopener noreferrer">
-          <Markdown source={post.title}/>
+          {/* <Markdown source={post.title}/> */}
+          {post.title}
         </a>
       </Typography>
       <div>

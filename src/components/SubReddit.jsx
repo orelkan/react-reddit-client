@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { Typography, CircularProgress } from "@material-ui/core";
 import Post from "./Post";
+import { redditUrl } from '../consts';
 
 const root = css`
   margin: 2em 7%;
@@ -29,23 +30,57 @@ ErrorDisplay.propTypes = {
 
 function SubReddit(props) {
   const [posts, setPosts] = useState(null);
+  const [lastRequestResult, setLastRequestResult] = useState(null);
   const [error, setError] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const filter = 'top';
+  const requestUrl = `${redditUrl}/r/${props.subreddit}/${filter}.json`;
+  const requestResToPosts = res => res.data.data.children.map(obj => obj.data);
 
   useEffect(() => {
     // Remove the 'www.' to cause a CORS error (and see the error state)
     axios
-      .get(`https://www.reddit.com/r/${props.subreddit}/top.json`)
+      .get(requestUrl)
       .then(res => {
         // Transform the raw data by extracting the nested posts
-        const posts = res.data.data.children.map(obj => obj.data);
+        // const posts = res.data.data.children.map(obj => obj.data);
+        const posts = requestResToPosts(res);
         setPosts(posts);
+        setLastRequestResult(res.data);
         setError(null);
       })
       .catch(err => {
         setError(err);
         setPosts(null);
       });
-  }, [props.subreddit]);
+  }, [props.subreddit, requestUrl]);
+  
+  useEffect(() => {
+    if (loadingMore) {
+      const after = lastRequestResult.after;
+      axios
+        .get(requestUrl + '?after=' + after)
+        .then(res => {
+          const morePosts = requestResToPosts(res);
+          setPosts(prevPosts => prevPosts.concat(morePosts));
+          setLastRequestResult(res.data);
+          setLoadingMore(false);
+        });
+    }
+  }, [loadingMore]);
+
+  function handleScroll() {
+    const el = document.getElementById('root');
+    if (el.getBoundingClientRect().bottom <= window.innerHeight) {
+      // alert('header bottom reached');
+      if(!loadingMore) setLoadingMore(true);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isLoading = error == null && posts == null;
   return (

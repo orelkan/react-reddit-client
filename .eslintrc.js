@@ -19,5 +19,7 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "indent": ["error", 2],
+        "semi": 2,
     }
 };

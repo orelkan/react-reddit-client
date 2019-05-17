@@ -55,6 +55,8 @@ function Post({ post }) {
   // const hasVideo = post.is_video;
   const hasVideo = post.media && post.media.reddit_video && 
     post.media.reddit_video.fallback_url;
+  const canExpand = (hasImage || hasText || hasVideo);
+  
   return (
     <Grow in={true} css={root} timeout={800}>
       <Card css={card}>
@@ -64,7 +66,7 @@ function Post({ post }) {
           <Thumbnail src={post.thumbnail} 
             height={post.thumbnail_height} onClick={handleExpanded} />}
           <TitleAndMetadata post={post}/>
-          {(hasImage || hasText || hasVideo) && 
+          {canExpand && 
           <IconButton css={exapnd} onClick={handleExpanded} aria-expanded={expanded}>
             <ExpandMoreIcon/>
           </IconButton>}
