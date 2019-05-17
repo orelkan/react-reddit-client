@@ -10,11 +10,15 @@ import { redditUrl } from '../consts';
 const root = css`
   margin: 2em 7%;
 `;
-const progress = css`
+const centeredProgress = css`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+`;
+const bigProgress = css`
+  ${centeredProgress};
   width: 8em !important;
   height: 8em !important;
-  position: relative;
-  left: calc(50% - 4em);
   margin-top: 3em;
 `;
 
@@ -30,67 +34,77 @@ ErrorDisplay.propTypes = {
 
 function SubReddit(props) {
   const [posts, setPosts] = useState(null);
+  const [loadingPosts, setLoadingPosts] = useState(false);
   const [lastRequestResult, setLastRequestResult] = useState(null);
   const [error, setError] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const filter = 'top';
   const requestUrl = `${redditUrl}/r/${props.subreddit}/${filter}.json`;
+  // Transform the raw data by extracting the nested posts
   const requestResToPosts = res => res.data.data.children.map(obj => obj.data);
 
+  // Loading posts on subreddit or filter change
   useEffect(() => {
-    // Remove the 'www.' to cause a CORS error (and see the error state)
+    setLoadingPosts(true);
     axios
       .get(requestUrl)
       .then(res => {
-        // Transform the raw data by extracting the nested posts
-        // const posts = res.data.data.children.map(obj => obj.data);
         const posts = requestResToPosts(res);
-        setPosts(posts);
-        setLastRequestResult(res.data);
+        setLoadingPosts(false);
+        setLastRequestResult(res.data.data);
         setError(null);
+        setPosts(posts);
       })
       .catch(err => {
+        setLoadingPosts(false);
         setError(err);
         setPosts(null);
       });
   }, [props.subreddit, requestUrl]);
   
+  // Loading more posts when scrolled to the bottom of the page
   useEffect(() => {
-    if (loadingMore) {
+    if (loadingMore && !loadingPosts && lastRequestResult.after) {
       const after = lastRequestResult.after;
       axios
         .get(requestUrl + '?after=' + after)
         .then(res => {
           const morePosts = requestResToPosts(res);
           setPosts(prevPosts => prevPosts.concat(morePosts));
-          setLastRequestResult(res.data);
+          setLastRequestResult(res.data.data);
+          setLoadingMore(false);
+        })
+        .catch(() => {
           setLoadingMore(false);
         });
+    } else {
+      setLoadingMore(false);
     }
-  }, [loadingMore]);
+  }, [loadingMore, lastRequestResult, loadingPosts, requestUrl]);
 
-  function handleScroll() {
-    const el = document.getElementById('root');
-    if (el.getBoundingClientRect().bottom <= window.innerHeight) {
-      // alert('header bottom reached');
-      if(!loadingMore) setLoadingMore(true);
-    }
-  }
-
+  // Setting the scroll event listener 
   useEffect(() => {
+    function handleScroll() {
+      const el = document.getElementById('root');
+      if (!loadingMore && 
+          el.getBoundingClientRect().bottom <= window.innerHeight) {
+        setLoadingMore(true);
+      }
+    }
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [loadingMore]);
 
-  const isLoading = error == null && posts == null;
   return (
     <div css={root}>
       <Typography variant="h2" gutterBottom>
         {`/r/${props.subreddit}`}
       </Typography>
-      {isLoading && <CircularProgress css={progress} />}
+      {loadingPosts && <CircularProgress css={bigProgress} />}
       {posts && posts.map(post => <Post post={post} key={post.id} />)}
       {error && <ErrorDisplay error={error} />}
+      {loadingMore && <CircularProgress css={centeredProgress}/>}
     </div>
   );
 }
