@@ -49,10 +49,10 @@ function Post({ post }) {
   const handleExpanded = () => setExpanded(!expanded);
   
   const hasThumbnail = post.thumbnail.startsWith('http');
+  const urlWithoutQuery = post.url.split('?')[0];
   const hasImage = ['.jpg', '.gif', '.png']
-    .some(ext => post.url.endsWith(ext));
+    .some(ext => urlWithoutQuery.endsWith(ext));
   const hasText = post.selftext && post.selftext.length > 0;
-  // const hasVideo = post.is_video;
   const hasVideo = post.media && post.media.reddit_video && 
     post.media.reddit_video.fallback_url;
   const canExpand = (hasImage || hasText || hasVideo);
