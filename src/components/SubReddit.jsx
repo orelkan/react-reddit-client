@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { memo } from 'react';
 import { useState, useEffect } from "react";
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
@@ -113,4 +114,4 @@ SubReddit.propTypes = {
   subreddit: PropTypes.string.isRequired
 };
 
-export default SubReddit;
+export default memo(SubReddit);

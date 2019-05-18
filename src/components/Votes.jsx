@@ -27,12 +27,12 @@ const VoteState = {
 
 function getColorByState(voteState) {
   switch (voteState) {
-    case VoteState.UPVOTE:
-      return upvoteColor;
-    case VoteState.DOWNVOTE:
-      return downvoteColor;
-    default:
-      return 'inherit';
+  case VoteState.UPVOTE:
+    return upvoteColor;
+  case VoteState.DOWNVOTE:
+    return downvoteColor;
+  default:
+    return 'inherit';
   }
 }
 
@@ -47,13 +47,14 @@ function Votes(props) {
   const currentColor = getColorByState(voteState);
   const makeButtonCss = desiredButtonState => css`
     ${iconButtonCss};
-    color: ${voteState === desiredButtonState ? currentColor : 'inherit'};
+    ${voteState === desiredButtonState && `color: ${currentColor};`}
   `;
   const upButtonCss = makeButtonCss(VoteState.UPVOTE);
   const downButtonCss = makeButtonCss(VoteState.DOWNVOTE);
-  const textCss = css`
-    color: ${currentColor};
-  `;
+  const textCss = (voteState === VoteState.NO_VOTE) ? css`` : 
+    css`
+      color: ${currentColor};
+    `;
   return (
     <div css={root}>
       <IconButton

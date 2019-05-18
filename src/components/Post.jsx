@@ -16,7 +16,7 @@ const root = css`
   }
   a {
     text-decoration: none;
-    color: black;
+    color: inherit;
   }
 `;
 const card = css`
@@ -50,7 +50,7 @@ function Post({ post }) {
   
   const hasThumbnail = post.thumbnail.startsWith('http');
   const hasImage = ['.jpg', '.gif', '.png']
-                  .some(ext => post.url.endsWith(ext));
+    .some(ext => post.url.endsWith(ext));
   const hasText = post.selftext && post.selftext.length > 0;
   // const hasVideo = post.is_video;
   const hasVideo = post.media && post.media.reddit_video && 
