@@ -11,3 +11,5 @@ export const filters = [
   {label: 'Best', value: 'best'},
   {label: 'Controversial', value: 'controversial'},
 ];
+
+export const githubLink = 'https://github.com/orelkan/react-reddit-client';
