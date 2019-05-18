@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { PropTypes } from 'prop-types';
-import { Drawer, List, ListItem, ListItemText, 
+import { SwipeableDrawer, List, ListItem, ListItemText, 
   ListItemIcon } from '@material-ui/core';
 import { InvertColors, InvertColorsOff } from '@material-ui/icons';
 
@@ -11,7 +11,7 @@ const root = css`
 
 function AppDrawer({open, onClose, onSelection}) {
   return (
-    <Drawer open={open} onClose={onClose}>
+    <SwipeableDrawer open={open} onClose={onClose}>
       <div css={root}>
         <List>
           <ListItem button onClick={() => onSelection('light')}>
@@ -24,7 +24,7 @@ function AppDrawer({open, onClose, onSelection}) {
           </ListItem>
         </List>
       </div>
-    </Drawer>
+    </SwipeableDrawer>
   );
 }
 
