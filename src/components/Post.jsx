@@ -9,6 +9,7 @@ import Votes from "./Votes";
 import TitleAndMetadata from "./TitleAndMetadata";
 import Thumbnail from './Thumbnail';
 import Video from './Video';
+import AnimatedHover from './AnimatedHover';
 
 const root = css`
   h5 {
@@ -73,7 +74,9 @@ function Post({ post }) {
         </div>
         <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
           {hasImage && 
-          <img src={post.url} alt='source' css={sourceImg}/>}
+          <AnimatedHover>
+            <img src={post.url} alt='source' css={sourceImg}/>
+          </AnimatedHover>}
           {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
           <div css={collapseContent}>
             {hasText && 

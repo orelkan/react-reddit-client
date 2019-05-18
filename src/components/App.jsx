@@ -12,10 +12,11 @@ const content = css`
 `;
 
 const darkColor = '#181a1b';
+const defaultVariant = 'dark';
 
 function App() {
   const [subreddit, setSubreddit] = useState('all');
-  const [themeVariant, setThemeVariant] = useState('light');
+  const [themeVariant, setThemeVariant] = useState(defaultVariant);
 
   function handleSubChange(event) {
     setSubreddit(event.target.value);

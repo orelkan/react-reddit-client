@@ -7,6 +7,7 @@ import axios from "axios";
 import { Typography, CircularProgress } from "@material-ui/core";
 import Post from "./Post";
 import { redditUrl } from '../consts';
+import SubRedditHeader from './SubRedditHeader';
 
 const root = css`
   margin: 2em 7%;
@@ -29,9 +30,7 @@ const ErrorDisplay = () => (
   </Typography>
 );
 
-ErrorDisplay.propTypes = {
-  error: PropTypes.object.isRequired
-};
+const defaultFilter = 'hot';
 
 function SubReddit(props) {
   const [posts, setPosts] = useState(null);
@@ -39,8 +38,10 @@ function SubReddit(props) {
   const [lastRequestResult, setLastRequestResult] = useState(null);
   const [error, setError] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
-  const filter = 'top';
-  const requestUrl = `${redditUrl}/r/${props.subreddit}/${filter}.json`;
+  const [filter, setFilter] = useState(defaultFilter);
+  const [filterType, time] = filter.split(' ');
+  const requestUrl = `${redditUrl}/r/${props.subreddit}/${filterType}.json` + 
+  ((time) ? `?t=${time}` : '');
   // Transform the raw data by extracting the nested posts
   const requestResToPosts = res => res.data.data.children.map(obj => obj.data);
 
@@ -99,12 +100,11 @@ function SubReddit(props) {
 
   return (
     <div css={root}>
-      <Typography variant="h2" gutterBottom>
-        {`/r/${props.subreddit}`}
-      </Typography>
+      <SubRedditHeader subreddit={props.subreddit} 
+        filter={filter} onSelection={setFilter}/>
       {loadingPosts && <CircularProgress css={bigProgress} />}
       {posts && posts.map(post => <Post post={post} key={post.id} />)}
-      {error && <ErrorDisplay/>}
+      {error && !loadingPosts && <ErrorDisplay/>}
       {loadingMore && <CircularProgress css={centeredProgress}/>}
     </div>
   );
