@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { Card, Typography, IconButton, Collapse, Grow } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Markdown from 'react-markdown';
+import he from 'he';
 import Votes from "./Votes";
 import TitleAndMetadata from "./TitleAndMetadata";
 import Thumbnail from './Thumbnail';
@@ -51,12 +52,13 @@ function Post({ post }) {
   
   const hasThumbnail = post.thumbnail.startsWith('http');
   const urlWithoutQuery = post.url.split('?')[0];
-  const hasImage = ['.jpg', '.gif', '.png']
+  const hasImage = ['.jpg', '.jpeg', '.gif', '.png']
     .some(ext => urlWithoutQuery.endsWith(ext));
   const hasText = post.selftext && post.selftext.length > 0;
   const hasVideo = post.media && post.media.reddit_video && 
     post.media.reddit_video.fallback_url;
-  const canExpand = (hasImage || hasText || hasVideo);
+  const hasEmbed = post.media_embed && post.media_embed.content;
+  const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
   
   return (
     <Grow in={true} css={root} timeout={800}>
@@ -78,6 +80,8 @@ function Post({ post }) {
             <img src={post.url} alt='source' css={sourceImg}/>
           </AnimatedHover>}
           {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
+          {hasEmbed && 
+          <div dangerouslySetInnerHTML={{__html: he.decode(post.media_embed.content)}}/>}
           <div css={collapseContent}>
             {hasText && 
             <Typography variant='h5'>
