@@ -8,7 +8,7 @@ const video = css`
 
 function Video({src}) {
   return (
-    <video muted loop poster autoPlay controls css={video}>
+    <video muted loop autoPlay controls css={video}>
       <source src={src}/>
     </video>
   );

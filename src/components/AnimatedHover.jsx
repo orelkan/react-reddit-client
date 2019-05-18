@@ -28,7 +28,7 @@ function AnimatedHover (props) {
 }
 
 AnimatedHover.propTypes = {
-  children: PropTypes.array.isRequired
+  children: PropTypes.object.isRequired
 };
 
 export default AnimatedHover;
