@@ -9,9 +9,9 @@ const root = css`
   width: 250px;
 `;
 
-function AppDrawer({open, onClose, onSelection}) {
+function AppDrawer({open, onOpen, onClose, onSelection}) {
   return (
-    <SwipeableDrawer open={open} onClose={onClose}>
+    <SwipeableDrawer open={open} onClose={onClose} onOpen={onOpen}>
       <div css={root}>
         <List>
           <ListItem button onClick={() => onSelection('light')}>
@@ -32,6 +32,7 @@ AppDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelection: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default AppDrawer;

@@ -23,9 +23,9 @@ const bigProgress = css`
   margin-top: 3em;
 `;
 
-const ErrorDisplay = props => (
+const ErrorDisplay = () => (
   <Typography variant="h3" gutterBottom>
-    Error Occured: {props.error.message}
+    No such Subreddit
   </Typography>
 );
 
@@ -104,7 +104,7 @@ function SubReddit(props) {
       </Typography>
       {loadingPosts && <CircularProgress css={bigProgress} />}
       {posts && posts.map(post => <Post post={post} key={post.id} />)}
-      {error && <ErrorDisplay error={error} />}
+      {error && <ErrorDisplay/>}
       {loadingMore && <CircularProgress css={centeredProgress}/>}
     </div>
   );

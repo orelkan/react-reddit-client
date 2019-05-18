@@ -15,6 +15,7 @@ function AppBarAndDrawer({onSubredditChange, onSelection}) {
         onMenuClick={() => setDrawerOpen(true)}/>
       <AppDrawer open={drawerOpen} 
         onSelection={handleSelection}
+        onOpen={() => setDrawerOpen(true)}
         onClose={() => setDrawerOpen(false)}/>
     </React.Fragment>
   );
