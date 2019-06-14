@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6cb3fb471efa8b876fc9194f1a96b740",
+    "revision": "7fdbc8ec2d3cd916b9eced674e67fdb6",
     "url": "/react-reddit-client/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-reddit-client/static/js/2.3c86105c.chunk.js"
   },
   {
-    "revision": "123cc55c061bc4627952",
-    "url": "/react-reddit-client/static/js/main.27c8fa20.chunk.js"
+    "revision": "c5b1fc05c511d15f188d",
+    "url": "/react-reddit-client/static/js/main.8a28ee2b.chunk.js"
   },
   {
     "revision": "39d01d6846f27f0b0afd",
