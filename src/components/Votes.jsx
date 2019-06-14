@@ -13,10 +13,12 @@ const root = css`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
   margin: auto 4% auto 0;
 `;
 const iconButtonCss = css`
   padding: 7px 0;
+  width: 40px;
 `;
 
 const VoteState = {

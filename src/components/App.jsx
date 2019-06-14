@@ -32,12 +32,18 @@ function App() {
     },
   });
 
+  const linkColor = css`
+    a {
+      color: lightblue;
+    }
+  `;
   const bgColor = themeVariant === 'dark' ? darkColor : 'inherit';
   const global = css`
     body {
       margin: 0;
       background: ${bgColor};
     }
+    ${themeVariant === 'dark' && linkColor}
   `;
 
   return (

@@ -27,7 +27,7 @@ const card = css`
 `;
 const cardContent = css`
   display: flex;
-  padding: 0.5em 3%;
+  padding: 1em 3%;
 `;
 const sourceImg = css`
   max-height: 30em;
@@ -43,7 +43,10 @@ const collapse = css`
   justify-content: center;
 `;
 const collapseContent = css`
-  padding: 1em 2em;
+  padding: 0 2em 1em 2em;
+`;
+const text = css`
+  margin-top: -1em;
 `;
 
 function Post({ post }) {
@@ -75,17 +78,17 @@ function Post({ post }) {
           </IconButton>}
         </div>
         <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
-          {hasImage && 
-          <AnimatedHover>
-            <img src={post.url} alt='source' css={sourceImg}/>
-          </AnimatedHover>}
-          {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
-          {hasEmbed && 
-          <div dangerouslySetInnerHTML={{__html: he.decode(post.media_embed.content)}}/>}
           <div css={collapseContent}>
+            {hasImage && 
+            <AnimatedHover>
+              <img src={post.url} alt='source' css={sourceImg}/>
+            </AnimatedHover>}
+            {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
+            {hasEmbed && 
+            <div dangerouslySetInnerHTML={{__html: he.decode(post.media_embed.content)}}/>}
             {hasText && 
-            <Typography variant='h5'>
-              <Markdown source={post.selftext}/>
+            <Typography variant='h5' css={text}>
+              <Markdown source={he.decode(post.selftext)}/>
             </Typography>}
           </div>
         </Collapse>

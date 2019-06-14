@@ -69,8 +69,16 @@ const styles = theme => ({
     },
   },
 });
+
 function SearchAppBar(props) {
   const { classes } = props;
+
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      props.onSubredditChange(event);
+    }
+  }
+  
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
@@ -92,7 +100,7 @@ function SearchAppBar(props) {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              onChange={props.onSubredditChange}
+              onKeyPress={handleKeyPress}
             />
           </div>
         </Toolbar>
