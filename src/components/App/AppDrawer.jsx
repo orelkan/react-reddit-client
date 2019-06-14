@@ -2,8 +2,9 @@
 import { jsx, css } from "@emotion/core";
 import { useState } from "react";
 import { PropTypes } from 'prop-types';
-import { SwipeableDrawer, List, ListItem, ListItemText, 
-  ListItemIcon, Typography, Divider, FormControlLabel, Switch} from '@material-ui/core';
+import { SwipeableDrawer, List, ListItem, 
+  ListItemText, ListItemIcon, Typography, Divider,
+  FormControlLabel, Switch } from '@material-ui/core';
 import { InvertColors, InvertColorsOff, Info } from '@material-ui/icons';
 import AboutModal from './AboutModal';
 import { useExpand } from "../shared/ExpandProvider";

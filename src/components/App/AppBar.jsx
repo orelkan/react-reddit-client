@@ -84,10 +84,13 @@ function SearchAppBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton onClick={props.onMenuClick} className={classes.menuButton} color="inherit" aria-label="Open drawer">
+          <IconButton onClick={props.onMenuClick} 
+            className={classes.menuButton} 
+            color="inherit" aria-label="Open drawer">
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+          <Typography className={classes.title} 
+            variant="h6" color="inherit" noWrap>
             React Reddit Client
           </Typography>
           <div className={classes.grow} />
