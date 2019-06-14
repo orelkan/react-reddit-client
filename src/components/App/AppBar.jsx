@@ -75,6 +75,7 @@ function SearchAppBar(props) {
 
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
+      window.scrollTo(0, 0);
       props.onSubredditChange(event);
     }
   }
