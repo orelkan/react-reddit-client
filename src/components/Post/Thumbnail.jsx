@@ -12,7 +12,9 @@ const thumbnail = css`
   }
 
   @media only screen and (max-width: 768px) {
-    display: none;
+    max-width: 25%;
+    height: auto;
+    align-self: center;
   }
 `;
 
