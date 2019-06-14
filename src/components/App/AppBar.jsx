@@ -9,9 +9,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/ArrowRightAlt';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import { useExpand } from '../shared/ExpandProvider';
 
 const styles = theme => ({
   root: {
@@ -75,7 +72,6 @@ const styles = theme => ({
 
 function SearchAppBar(props) {
   const { classes } = props;
-  const [autoExpand, setAutoExpand] = useExpand();
 
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -94,13 +90,6 @@ function SearchAppBar(props) {
             React Reddit Client
           </Typography>
           <div className={classes.grow} />
-          <FormControlLabel
-            control={
-              <Switch checked={autoExpand} 
-                onChange={() => setAutoExpand(!autoExpand)} />
-            }
-            label="Auto Expand"
-          />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

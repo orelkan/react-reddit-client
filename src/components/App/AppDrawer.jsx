@@ -3,9 +3,10 @@ import { jsx, css } from "@emotion/core";
 import { useState } from "react";
 import { PropTypes } from 'prop-types';
 import { SwipeableDrawer, List, ListItem, ListItemText, 
-  ListItemIcon, Typography, Divider} from '@material-ui/core';
+  ListItemIcon, Typography, Divider, FormControlLabel, Switch} from '@material-ui/core';
 import { InvertColors, InvertColorsOff, Info } from '@material-ui/icons';
 import AboutModal from './AboutModal';
+import { useExpand } from "../shared/ExpandProvider";
 
 const root = css`
   width: 250px;
@@ -13,9 +14,24 @@ const root = css`
 const title = css`
   margin: 0.5em;
 `;
+const autoExpandListItem = css`
+  height: 3em;
+`;
+const formControlLabel = css`
+  .label {
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+`;
 
 function AppDrawer({open, onOpen, onClose, onSelection}) {
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [autoExpand, setAutoExpand] = useExpand();
+
+  function handleExpandSwitch() {
+    onClose();
+    setAutoExpand(!autoExpand);
+  }
 
   return (
     <SwipeableDrawer open={open} onClose={onClose} onOpen={onOpen}>
@@ -32,6 +48,16 @@ function AppDrawer({open, onOpen, onClose, onSelection}) {
           <ListItem button onClick={() => onSelection('dark')}>
             <ListItemIcon><InvertColorsOff/></ListItemIcon>
             <ListItemText primary='Dark theme'/>
+          </ListItem>
+          <ListItem button css={autoExpandListItem}>
+            <FormControlLabel
+              css={formControlLabel}
+              classes={{label: 'label'}}
+              control={
+                <Switch checked={autoExpand} 
+                  onChange={handleExpandSwitch} />
+              }
+              label="Auto Expand"/>
           </ListItem>
           <ListItem button onClick={() => setAboutOpen(true)}>
             <ListItemIcon><Info/></ListItemIcon>
