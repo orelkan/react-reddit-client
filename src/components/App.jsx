@@ -6,6 +6,7 @@ import { StylesProvider } from "@material-ui/styles";
 import red from '@material-ui/core/colors/red';
 import SubReddit from './SubReddit/SubReddit';
 import AppBarAndDrawer from './App/AppBarAndDrawer';
+import ExpandProvider from './shared/ExpandProvider';
 
 const content = css`
   margin-top: 5em;
@@ -38,6 +39,7 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {main: red[800]},
+      secondary: {main: red[300]},
       type: themeVariant
     },
     typography: {
@@ -64,11 +66,13 @@ function App() {
     <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
         <Global styles={global}/>
-        <AppBarAndDrawer onSubredditChange={handleSubChange} 
-          onSelection={setThemeVariant}/>
-        <div css={content}>
-          <SubReddit subreddit={subreddit}/>
-        </div>
+        <ExpandProvider>
+          <AppBarAndDrawer onSubredditChange={handleSubChange} 
+            onSelection={setThemeVariant}/>
+          <div css={content}>
+            <SubReddit subreddit={subreddit}/>
+          </div>
+        </ExpandProvider>
       </MuiThemeProvider>
     </StylesProvider>
   );

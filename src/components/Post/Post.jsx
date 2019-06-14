@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import { Card, Typography, IconButton, Collapse, Grow } from "@material-ui/core";
@@ -11,6 +11,7 @@ import TitleAndMetadata from "./TitleAndMetadata";
 import Thumbnail from './Thumbnail';
 import Video from './Video';
 import AnimatedHover from './AnimatedHover';
+import { useExpand } from '../shared/ExpandProvider';
 
 const card = css`
   min-width: 275px;
@@ -51,9 +52,14 @@ const text = css`
 `;
 
 function Post({ post, growIn = true}) {
-  const [expanded, setExpanded] = useState(false);
+  const [autoExpand] = useExpand();
+  const [expanded, setExpanded] = useState(autoExpand);
   const handleExpanded = () => setExpanded(!expanded);
   
+  useEffect(() => {
+    setExpanded(autoExpand);
+  }, [autoExpand]);
+
   const hasThumbnail = post.thumbnail.startsWith('http');
   const urlWithoutQuery = post.url.split('?')[0];
   const hasImage = ['.jpg', '.jpeg', '.gif', '.png']
@@ -78,6 +84,7 @@ function Post({ post, growIn = true}) {
             <ExpandMoreIcon/>
           </IconButton>}
         </div>
+        {canExpand && 
         <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
           <div css={collapseContent}>
             {hasImage && 
@@ -92,7 +99,7 @@ function Post({ post, growIn = true}) {
               <Markdown source={he.decode(post.selftext)}/>
             </Typography>}
           </div>
-        </Collapse>
+        </Collapse>}
       </Card>
     </Grow>
   );
