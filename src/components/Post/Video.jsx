@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 const video = css`
   max-height: 30em;
+  max-width: 100%;
 `;
 
 function Video({src}) {

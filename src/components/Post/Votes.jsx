@@ -38,6 +38,12 @@ function getColorByState(voteState) {
   }
 }
 
+function kFormatter(num) {
+  return num > 999 ? 
+    (num / 1000).toFixed(1) + 'k' 
+    : num;
+}
+
 function Votes(props) {
   const [voteState, setVoteState] = useState(VoteState.NO_VOTE);
 
@@ -67,7 +73,7 @@ function Votes(props) {
       </IconButton>
 
       <Typography variant="h5" css={textCss}>
-        {props.votes + voteState}
+        {kFormatter(props.votes + voteState)}
       </Typography>
 
       <IconButton

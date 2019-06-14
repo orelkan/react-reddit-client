@@ -11,6 +11,9 @@ import SubRedditHeader from './SubRedditHeader';
 
 const root = css`
   margin: 2em 7%;
+  @media only screen and (max-width: 768px) {
+    margin: 2em 4%;
+  }
 `;
 const centeredProgress = css`
   display: flex;

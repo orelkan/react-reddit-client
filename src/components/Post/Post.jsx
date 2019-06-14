@@ -43,9 +43,18 @@ const collapse = css`
   justify-content: center;
 `;
 const collapseContent = css`
-  padding: 0 2em 1em 2em;
+  padding: 0 2em 1em 2em;  
+  @media only screen and (max-width: 768px) {
+    padding: 5%;
+    padding-top: 0;
+  }
 `;
 const text = css`
+  overflow: auto;
+  @media only screen and (max-width: 768px) {
+    max-width: 85%;
+    margin: 0 auto;
+  }
   p {
     margin-top: 0;
   }
@@ -54,11 +63,22 @@ const text = css`
 function Post({ post, growIn = true}) {
   const [autoExpand] = useExpand();
   const [expanded, setExpanded] = useState(autoExpand);
+  const [width, setWidth] = useState(window.innerWidth);
   const handleExpanded = () => setExpanded(!expanded);
   
+  // Change Post expansion when auto expand chnages
   useEffect(() => {
     setExpanded(autoExpand);
   }, [autoExpand]);
+
+  // Window width listener
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const hasThumbnail = post.thumbnail.startsWith('http');
   const urlWithoutQuery = post.url.split('?')[0];
@@ -70,6 +90,14 @@ function Post({ post, growIn = true}) {
   const hasEmbed = post.media_embed && post.media_embed.content;
   const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
   
+  // If it's a small screen, removes width and height from the media embed
+  const removeWidthIfSmall = hasEmbed && 
+    width <= 768 ? 
+    post.media_embed.content.replace(/width="[0-9]+"/, '')
+      .replace(/height="[0-9]+"/, '') :
+    post.media_embed.content;
+  const htmlEmbed = hasEmbed && he.decode(removeWidthIfSmall);
+
   return (
     <Grow in={growIn} timeout={500}>
       <Card css={card}>
@@ -93,7 +121,7 @@ function Post({ post, growIn = true}) {
             </AnimatedHover>}
             {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
             {hasEmbed && 
-            <div dangerouslySetInnerHTML={{__html: he.decode(post.media_embed.content)}}/>}
+            <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>}
             {hasText && 
             <Typography variant='h5' css={text}>
               <Markdown source={he.decode(post.selftext)}/>

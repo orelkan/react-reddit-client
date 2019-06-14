@@ -10,6 +10,10 @@ const thumbnail = css`
   &:hover {
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 function Thumbnail(props){
