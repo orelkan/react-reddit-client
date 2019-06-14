@@ -10,6 +10,19 @@ import AppBarAndDrawer from './App/AppBarAndDrawer';
 const content = css`
   margin-top: 5em;
 `;
+const scrollbar = css`
+  body::-webkit-scrollbar {
+    width: 0.8em;
+  }
+  body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: #383838;
+    outline: 1px solid slategrey;
+  }
+`;
 
 const darkColor = '#181a1b';
 const defaultVariant = 'dark';
@@ -39,6 +52,7 @@ function App() {
   `;
   const bgColor = themeVariant === 'dark' ? darkColor : 'inherit';
   const global = css`
+    ${scrollbar}
     body {
       margin: 0;
       background: ${bgColor};

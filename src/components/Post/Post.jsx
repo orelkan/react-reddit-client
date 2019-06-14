@@ -29,6 +29,7 @@ const cardContent = css`
 `;
 const sourceImg = css`
   max-height: 30em;
+  max-width: 100%;
   margin: auto 0;
   display: block;
 `;
