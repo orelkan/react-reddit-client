@@ -12,7 +12,9 @@ import Thumbnail from './Thumbnail';
 import Video from './Video';
 import AnimatedHover from './AnimatedHover';
 
-const root = css`
+const card = css`
+  min-width: 275px;
+  margin: 1em auto;
   h5 {
     font-size: 13pt;
   }
@@ -20,10 +22,6 @@ const root = css`
     text-decoration: none;
     color: inherit;
   }
-`;
-const card = css`
-  min-width: 275px;
-  margin: 1em auto;
 `;
 const cardContent = css`
   display: flex;
@@ -46,10 +44,12 @@ const collapseContent = css`
   padding: 0 2em 1em 2em;
 `;
 const text = css`
-  margin-top: -1em;
+  p {
+    margin-top: 0;
+  }
 `;
 
-function Post({ post }) {
+function Post({ post, growIn = true}) {
   const [expanded, setExpanded] = useState(false);
   const handleExpanded = () => setExpanded(!expanded);
   
@@ -64,13 +64,13 @@ function Post({ post }) {
   const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
   
   return (
-    <Grow in={true} css={root} timeout={800}>
+    <Grow in={growIn} timeout={500}>
       <Card css={card}>
         <div css={cardContent}>
           <Votes votes={post.ups} />
           {hasThumbnail && 
           <Thumbnail src={post.thumbnail} 
-            height={post.thumbnail_height} onClick={handleExpanded} />}
+            height={post.thumbnail_height} onClick={handleExpanded}/>}
           <TitleAndMetadata post={post}/>
           {canExpand && 
           <IconButton css={exapnd} onClick={handleExpanded} aria-expanded={expanded}>
@@ -98,7 +98,8 @@ function Post({ post }) {
 }
 
 Post.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  growIn: PropTypes.bool,
 };
 
 export default Post;

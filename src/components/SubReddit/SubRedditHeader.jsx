@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import { Typography, FormControl, InputLabel,
   Select, OutlinedInput, MenuItem } from "@material-ui/core";
-import { filters } from '../consts';
+import { filters } from '../../consts';
 
 const root = css`
   display: flex;

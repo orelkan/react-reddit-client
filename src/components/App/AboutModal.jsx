@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogContent, 
   DialogContentText, DialogActions, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { githubLink } from '../consts';
+import { githubLink } from '../../consts';
 
 
 function AboutModal({open, onClose}) {

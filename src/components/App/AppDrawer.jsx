@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
+import { useState } from "react";
 import { PropTypes } from 'prop-types';
 import { SwipeableDrawer, List, ListItem, ListItemText, 
   ListItemIcon, Typography, Divider} from '@material-ui/core';
 import { InvertColors, InvertColorsOff, Info } from '@material-ui/icons';
 import AboutModal from './AboutModal';
-import { useState } from "react";
 
 const root = css`
   width: 250px;
