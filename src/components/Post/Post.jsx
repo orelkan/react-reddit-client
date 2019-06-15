@@ -57,7 +57,7 @@ function Post({ post, growIn = true}) {
   const urlWithoutQuery = post.url.split('?')[0];
   const hasImage = ['.jpg', '.jpeg', '.gif', '.png']
     .some(ext => urlWithoutQuery.endsWith(ext));
-  const hasText = post.selftext && post.selftext.length > 0;
+  const hasText = post.selftext && (post.selftext.length > 0);
   const hasVideo = post.media && post.media.reddit_video && 
     post.media.reddit_video.fallback_url;
   const hasEmbed = post.media_embed && post.media_embed.content;

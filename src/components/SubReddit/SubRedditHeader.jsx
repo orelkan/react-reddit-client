@@ -19,7 +19,7 @@ const breakWord = css`
 
 function SubRedditHeader({subreddit, filter, onSelection}) {
   return (
-    <Grid container spacing={3} justify="space-between">
+    <Grid container justify="space-between">
       <Grid item xs={12} sm={6} md={6} lg={6} css={rowPadding}>
         <Typography variant="h2" css={breakWord}>
           {`/r/${subreddit}`}

@@ -1,8 +1,10 @@
 /** @jsx jsx */
+import { memo } from 'react';
 import { useState, useEffect } from "react";
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import axios from "axios";
+import { uniqBy } from 'lodash';
 import { Typography, CircularProgress } from "@material-ui/core";
 import Post from "../Post/Post";
 import { redditUrl } from '../../consts';
@@ -57,7 +59,7 @@ function SubReddit(props) {
         setLoadingPosts(false);
         setLastRequestResult(res.data.data);
         setError(null);
-        setPosts(posts);
+        setPosts(uniqBy(posts, 'id'));
       })
       .catch(err => {
         setLoadingPosts(false);
@@ -74,7 +76,8 @@ function SubReddit(props) {
         .get(requestUrl + '?after=' + after)
         .then(res => {
           const morePosts = requestResToPosts(res);
-          setPosts(prevPosts => prevPosts && prevPosts.concat(morePosts));
+          setPosts(prevPosts => prevPosts && 
+            uniqBy(prevPosts.concat(morePosts), 'id'));
           setLastRequestResult(res.data.data);
           setLoadingMore(false);
         })
@@ -117,4 +120,4 @@ SubReddit.propTypes = {
   subreddit: PropTypes.string.isRequired
 };
 
-export default SubReddit;
+export default memo(SubReddit);
