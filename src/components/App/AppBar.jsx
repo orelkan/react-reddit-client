@@ -68,6 +68,9 @@ const styles = theme => ({
       },
     },
   },
+  toolbar: {
+    minHeight: '52px'
+  }
 });
 
 function SearchAppBar(props) {
@@ -83,7 +86,7 @@ function SearchAppBar(props) {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton onClick={props.onMenuClick} 
             className={classes.menuButton} 
             color="inherit" aria-label="Open drawer">

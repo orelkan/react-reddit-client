@@ -9,11 +9,11 @@ import AppBarAndDrawer from './App/AppBarAndDrawer';
 import ExpandProvider from './shared/ExpandProvider';
 
 const content = css`
-  margin-top: 5em;
+  margin-top: 4.5em;
 `;
 const scrollbar = css`
   body::-webkit-scrollbar {
-    width: 0.8em;
+    width: 0.5em;
   }
   body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -26,7 +26,7 @@ const scrollbar = css`
 `;
 
 const darkColor = '#181a1b';
-const defaultVariant = 'dark';
+const defaultVariant = localStorage.getItem('theme') || 'dark';
 
 function App() {
   const [subreddit, setSubreddit] = useState('all');
@@ -34,6 +34,11 @@ function App() {
 
   function handleSubChange(event) {
     setSubreddit(event.target.value);
+  }
+
+  function setThemeToLocalStorage(newTheme) {
+    localStorage.setItem('theme', newTheme);
+    setThemeVariant(newTheme);
   }
 
   const theme = createMuiTheme({
@@ -68,7 +73,7 @@ function App() {
         <Global styles={global}/>
         <ExpandProvider>
           <AppBarAndDrawer onSubredditChange={handleSubChange} 
-            onSelection={setThemeVariant}/>
+            onSelection={setThemeToLocalStorage}/>
           <div css={content}>
             <SubReddit subreddit={subreddit}/>
           </div>

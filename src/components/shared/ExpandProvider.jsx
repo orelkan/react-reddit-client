@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const defaultExpand = false;
+const defaultExpand = localStorage.getItem('autoExpand') || false;
 export const ExpandContext = React.createContext(defaultExpand);
 
 export default function ExpandProvider({children}) {
@@ -21,6 +21,11 @@ ExpandProvider.propTypes = {
 
 export function useExpand() {
   const [autoExpand, setAutoExpand] = useContext(ExpandContext);
-  return [autoExpand, setAutoExpand];
+  const setAutoExpandToLocalStorage = (newExpand) => {
+    localStorage.setItem('autoExpand', newExpand);
+    setAutoExpand(newExpand);
+  };
+
+  return [autoExpand, setAutoExpandToLocalStorage];
 }
 

@@ -17,7 +17,7 @@ const breakWord = css`
   overflow-wrap: break-word;
 `;
 
-function SubRedditHeader({subreddit, filter, onSelection}) {
+function SubRedditHeader({ subreddit, filter, onSelection }) {
   return (
     <Grid container justify="space-between">
       <Grid item xs={12} sm={6} md={6} lg={6} css={rowPadding}>
@@ -35,7 +35,7 @@ function SubRedditHeader({subreddit, filter, onSelection}) {
               <OutlinedInput labelWidth={43}/>
             }
           >
-            {filters.map(({label, value}) => 
+            {filters.map(({ label, value }) => 
               <MenuItem key={value} value={value}>{label}</MenuItem>
             )}
           </Select>

@@ -43,11 +43,15 @@ function SubReddit(props) {
   const [error, setError] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const [filter, setFilter] = useState(defaultFilter);
+
+  // If the filter has a time aspect it will be seperated by space
+  // example: 'top hour'
   const [filterType, time] = filter.split(' ');
   const requestUrl = `${redditUrl}/r/${props.subreddit}/${filterType}.json` + 
   ((time) ? `?t=${time}` : '');
   // Transform the raw data by extracting the nested posts
   const requestResToPosts = res => res.data.data.children.map(obj => obj.data);
+  const setUniquePosts = newPosts => setPosts(uniqBy(newPosts, 'id'));
 
   // Loading posts on subreddit or filter change
   useEffect(() => {
@@ -59,7 +63,7 @@ function SubReddit(props) {
         setLoadingPosts(false);
         setLastRequestResult(res.data.data);
         setError(null);
-        setPosts(uniqBy(posts, 'id'));
+        setUniquePosts(posts);
       })
       .catch(err => {
         setLoadingPosts(false);
@@ -76,8 +80,7 @@ function SubReddit(props) {
         .get(requestUrl + '?after=' + after)
         .then(res => {
           const morePosts = requestResToPosts(res);
-          setPosts(prevPosts => prevPosts && 
-            uniqBy(prevPosts.concat(morePosts), 'id'));
+          setUniquePosts(posts && posts.concat(morePosts));
           setLastRequestResult(res.data.data);
           setLoadingMore(false);
         })

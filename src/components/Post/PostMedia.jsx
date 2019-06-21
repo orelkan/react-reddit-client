@@ -59,7 +59,7 @@ function PostMedia({ post, expanded, hasImage,
 }
 
 PostMedia.propTypes = {
-  expanded: PropTypes.bool,
+  expanded: PropTypes.bool.isRequired,
   hasEmbed: PropTypes.any,
   hasImage: PropTypes.any,
   hasText: PropTypes.any,
