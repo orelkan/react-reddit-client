@@ -59,11 +59,11 @@ function SubReddit(props) {
     axios
       .get(requestUrl)
       .then(res => {
-        const posts = requestResToPosts(res);
+        const newPosts = requestResToPosts(res);
         setLoadingPosts(false);
         setLastRequestResult(res.data.data);
         setError(null);
-        setUniquePosts(posts);
+        setUniquePosts(newPosts);
       })
       .catch(err => {
         setLoadingPosts(false);
@@ -90,7 +90,7 @@ function SubReddit(props) {
     } else {
       setLoadingMore(false);
     }
-  }, [loadingMore, lastRequestResult, loadingPosts, requestUrl]);
+  }, [loadingMore, lastRequestResult, loadingPosts, requestUrl, posts]);
 
   // Setting the scroll event listener 
   useEffect(() => {
