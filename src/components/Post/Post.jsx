@@ -29,6 +29,7 @@ const postSummary = css`
 const exapndIcon = css`
   height: fit-content;
   margin: auto 0 auto auto;
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
 function Post({ post, growIn = true}) {
@@ -36,8 +37,13 @@ function Post({ post, growIn = true}) {
   const [expanded, setExpanded] = useState(autoExpand);
   const [width, setWidth] = useState(window.innerWidth);
 
+  const deg = expanded ? 180 : 0;
+  const expandIconDirection = css`
+    transform: rotate(${deg}deg);
+  `;
+
   const handleExpanded = () => setExpanded(!expanded);
-  
+
   // Change Post expansion when auto expand chnages
   useEffect(() => {
     setExpanded(autoExpand);
@@ -81,7 +87,8 @@ function Post({ post, growIn = true}) {
             height={post.thumbnail_height} onClick={handleExpanded}/>}
           <TitleAndMetadata post={post}/>
           {canExpand && 
-          <IconButton css={exapndIcon} onClick={handleExpanded} aria-expanded={expanded}>
+          <IconButton css={[exapndIcon, expandIconDirection]} 
+            onClick={handleExpanded} aria-expanded={expanded}>
             <ExpandMoreIcon/>
           </IconButton>}
         </div>
