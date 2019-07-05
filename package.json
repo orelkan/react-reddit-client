@@ -19,7 +19,8 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-markdown": "^4.0.8",
-    "react-spring": "^8.0.20"
+    "react-spring": "^8.0.27",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

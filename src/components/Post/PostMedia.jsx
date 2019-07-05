@@ -6,6 +6,7 @@ import Markdown from 'react-markdown';
 import he from 'he';
 import Video from './Video';
 import AnimatedHover from './AnimatedHover';
+import Collapse from '../shared/Collapse';
 
 const content = css`
   display: flex;
@@ -37,20 +38,22 @@ const text = css`
 function PostMedia({ post, expanded, hasImage, 
   hasVideo, hasEmbed, hasText, htmlEmbed }) {
   
-  return (expanded &&
-    <div css={content}>
-      {hasImage && 
+  return (
+    <Collapse isOpen={expanded}>
+      <div css={content}>
+        {hasImage && 
         <AnimatedHover>
           <img src={post.url} alt='source' css={sourceImg}/>
         </AnimatedHover>}
-      {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
-      {hasEmbed && 
+        {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
+        {hasEmbed && 
         <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>}
-      {hasText && 
+        {hasText && 
         <Typography variant='h5' css={text}>
           <Markdown source={he.decode(post.selftext)}/>
         </Typography>}
-    </div>
+      </div>
+    </Collapse>
   );
 }
 
