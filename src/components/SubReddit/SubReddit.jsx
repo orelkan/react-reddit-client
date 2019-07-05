@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { uniqBy } from 'lodash';
 import { Typography, CircularProgress } from "@material-ui/core";
-import Post from "../Post/Post";
+import PostsList from "../Post/PostsList";
 import { redditUrl } from '../../consts';
 import SubRedditHeader from './SubRedditHeader';
 
@@ -110,9 +110,8 @@ function SubReddit(props) {
     <div css={root}>
       <SubRedditHeader subreddit={props.subreddit} 
         filter={filter} onSelection={setFilter}/>
-      {loadingPosts && <CircularProgress css={bigProgress} />}
-      {posts && posts.map(post => 
-        <Post post={post} key={post.id} growIn={!loadingPosts} />)}
+      {loadingPosts && <CircularProgress css={bigProgress}/>}
+      <PostsList posts={posts} loadingPosts={loadingPosts}/>
       {error && !loadingPosts && <ErrorDisplay/>}
       {loadingMore && <CircularProgress css={centeredProgress}/>}
     </div>

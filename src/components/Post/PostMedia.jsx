@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
-import { Typography, Collapse } from "@material-ui/core";
+import { Typography, ExpansionPanel, ExpansionPanelDetails } from "@material-ui/core";
 import Markdown from 'react-markdown';
 import he from 'he';
 import Video from './Video';
@@ -16,6 +16,7 @@ const sourceImg = css`
 const collapse = css`
   display: flex;
   justify-content: center;
+  padding: 0;
 `;
 const collapseContent = css`
   padding: 0 2em 1em 2em;  
@@ -40,21 +41,23 @@ function PostMedia({ post, expanded, hasImage,
   hasVideo, hasEmbed, hasText, htmlEmbed }) {
   
   return (
-    <Collapse in={expanded} timeout="auto" unmountOnExit css={collapse}>
-      <div css={collapseContent}>
-        {hasImage && 
+    <ExpansionPanel expanded={expanded}>
+      <ExpansionPanelDetails css={collapse}>
+        <div css={collapseContent}>
+          {hasImage && 
             <AnimatedHover>
               <img src={post.url} alt='source' css={sourceImg}/>
             </AnimatedHover>}
-        {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
-        {hasEmbed && 
+          {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
+          {hasEmbed && 
             <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>}
-        {hasText && 
+          {hasText && 
             <Typography variant='h5' css={text}>
               <Markdown source={he.decode(post.selftext)}/>
             </Typography>}
-      </div>
-    </Collapse>
+        </div>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }
 

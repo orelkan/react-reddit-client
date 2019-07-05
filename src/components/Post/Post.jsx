@@ -32,10 +32,9 @@ const exapndIcon = css`
   transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
-function Post({ post, growIn = true}) {
+function Post({ post, width, growIn = true}) {
   const [autoExpand] = useExpand();
   const [expanded, setExpanded] = useState(autoExpand);
-  const [width, setWidth] = useState(window.innerWidth);
 
   const deg = expanded ? 180 : 0;
   const expandIconDirection = css`
@@ -48,15 +47,6 @@ function Post({ post, growIn = true}) {
   useEffect(() => {
     setExpanded(autoExpand);
   }, [autoExpand]);
-
-  // Window width listener
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // Different media logic
   const hasThumbnail = post.thumbnail.startsWith('http');
@@ -104,6 +94,7 @@ function Post({ post, growIn = true}) {
 Post.propTypes = {
   post: PropTypes.object.isRequired,
   growIn: PropTypes.bool,
+  width: PropTypes.number.isRequired,
 };
 
 export default Post;
