@@ -33,7 +33,7 @@ function App() {
   const [themeVariant, setThemeVariant] = useState(defaultVariant);
 
   function handleSubChange(event) {
-    setSubreddit(event.target.value);
+    setSubreddit(event.target.value.trim());
   }
 
   function setThemeToLocalStorage(newTheme) {

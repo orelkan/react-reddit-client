@@ -17,10 +17,6 @@ const rootCard = css`
   h5 {
     font-size: 13pt;
   }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
 `;
 const postSummary = css`
   display: flex;

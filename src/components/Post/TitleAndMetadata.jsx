@@ -10,6 +10,10 @@ const root = css`
   h4 {
     font-size: 12pt;
   }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 const title = css`
   margin-bottom: 1em;
