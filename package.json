@@ -12,6 +12,7 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "next",
+    "@welldone-software/why-did-you-render": "^3.2.1",
     "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
     "he": "^1.2.0",

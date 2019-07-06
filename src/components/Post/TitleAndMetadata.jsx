@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { memo } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import {Typography} from '@material-ui/core';
@@ -14,7 +15,7 @@ const title = css`
   margin-bottom: 1em;
 `;
 
-function TitleAndMetadata({post}) {
+function TitleAndMetadata({ post }) {
   const postLink = `https://www.reddit.com${post.permalink}`;
 
   return (
@@ -37,4 +38,4 @@ TitleAndMetadata.propTypes = {
   post: PropTypes.object.isRequired
 };
 
-export default TitleAndMetadata;
+export default memo(TitleAndMetadata);

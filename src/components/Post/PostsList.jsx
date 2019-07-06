@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { jsx } from '@emotion/core';
 import PropTypes from "prop-types";
 import Post from './Post';
@@ -27,4 +27,6 @@ PostsList.propTypes = {
   posts: PropTypes.array,
 };
 
-export default PostsList;
+PostsList.whyDidYouRender = true;
+
+export default memo(PostsList);

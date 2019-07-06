@@ -78,4 +78,6 @@ AppDrawer.propTypes = {
   onOpen: PropTypes.func.isRequired,
 };
 
+AppDrawer.whyDidYouRender = true;
+
 export default AppDrawer;

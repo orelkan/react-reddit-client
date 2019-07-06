@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import { Card, IconButton, Grow } from "@material-ui/core";
@@ -49,23 +49,25 @@ function Post({ post, width, growIn = true}) {
   }, [autoExpand]);
 
   // Different media logic
-  const hasThumbnail = post.thumbnail.startsWith('http');
+  const hasThumbnail = Boolean(post.thumbnail.startsWith('http'));
   const urlWithoutQuery = post.url.split('?')[0];
-  const hasImage = ['.jpg', '.jpeg', '.gif', '.png']
-    .some(ext => urlWithoutQuery.endsWith(ext));
-  const hasText = post.selftext && (post.selftext.length > 0);
-  const hasVideo = post.media && post.media.reddit_video && 
-    post.media.reddit_video.fallback_url;
-  const hasEmbed = post.media_embed && post.media_embed.content;
+  const hasImage = Boolean(['.jpg', '.jpeg', '.gif', '.png']
+    .some(ext => urlWithoutQuery.endsWith(ext)));
+  const hasText = Boolean(post.selftext && (post.selftext.length > 0));
+  const hasVideo = Boolean(post.media && post.media.reddit_video && 
+    post.media.reddit_video.fallback_url);
+  const hasEmbed = Boolean(post.media_embed && post.media_embed.content);
   const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
   
   // If it's a small screen, removes width and height from the media embed
-  const removeWidthIfSmall = hasEmbed && 
-    width <= 768 ? 
-    post.media_embed.content.replace(/width="[0-9]+"/, '')
-      .replace(/height="[0-9]+"/, '') :
-    post.media_embed.content;
-  const htmlEmbed = hasEmbed && he.decode(removeWidthIfSmall);
+  const htmlEmbed = useMemo(() => {
+    const removeWidthIfSmall = hasEmbed && 
+      width <= 768 ? 
+      post.media_embed.content.replace(/width="[0-9]+"/, '')
+        .replace(/height="[0-9]+"/, '') :
+      post.media_embed.content;
+    return hasEmbed && he.decode(removeWidthIfSmall);
+  }, [width, hasEmbed, post]);
 
   return (
     <Grow in={growIn} timeout={500}>
@@ -97,4 +99,6 @@ Post.propTypes = {
   width: PropTypes.number.isRequired,
 };
 
-export default Post;
+Post.whyDidYouRender = true;
+
+export default memo(Post);

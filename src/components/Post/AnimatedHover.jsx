@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { useSpring, animated } from "react-spring";
 
@@ -31,4 +31,4 @@ AnimatedHover.propTypes = {
   children: PropTypes.object.isRequired
 };
 
-export default AnimatedHover;
+export default memo(AnimatedHover);

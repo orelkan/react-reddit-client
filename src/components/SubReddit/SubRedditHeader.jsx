@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { memo } from "react";
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 import { Typography, FormControl, InputLabel,
@@ -51,4 +52,6 @@ SubRedditHeader.propTypes = {
   onSelection: PropTypes.func.isRequired,
 };
 
-export default SubRedditHeader;
+SubRedditHeader.whyDidYouRender = true;
+
+export default memo(SubRedditHeader);

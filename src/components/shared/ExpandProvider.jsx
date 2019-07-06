@@ -24,8 +24,10 @@ ExpandProvider.propTypes = {
 export function useExpand() {
   const [autoExpand, setAutoExpand] = useContext(ExpandContext);
   const setAutoExpandToLocalStorage = (newExpand) => {
-    localStorage.setItem('autoExpand', newExpand);
-    setAutoExpand(newExpand);
+    if (newExpand !== autoExpand) {
+      localStorage.setItem('autoExpand', newExpand);
+      setAutoExpand(newExpand);
+    }
   };
 
   return [autoExpand, setAutoExpandToLocalStorage];

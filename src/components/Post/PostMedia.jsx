@@ -59,10 +59,10 @@ function PostMedia({ post, expanded, hasImage,
 
 PostMedia.propTypes = {
   expanded: PropTypes.bool.isRequired,
-  hasEmbed: PropTypes.any,
-  hasImage: PropTypes.any,
-  hasText: PropTypes.any,
-  hasVideo: PropTypes.any,
+  hasEmbed: PropTypes.bool.isRequired,
+  hasImage: PropTypes.bool.isRequired,
+  hasText: PropTypes.bool.isRequired,
+  hasVideo: PropTypes.bool.isRequired,
   htmlEmbed: PropTypes.any,
   post: PropTypes.object.isRequired,
 };

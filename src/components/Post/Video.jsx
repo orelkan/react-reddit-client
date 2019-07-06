@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { memo } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from "prop-types";
 
@@ -19,4 +20,4 @@ Video.propTypes = {
   src: PropTypes.string.isRequired
 };
 
-export default Video;
+export default memo(Video);

@@ -122,4 +122,6 @@ SearchAppBar.propTypes = {
   onMenuClick: PropTypes.func.isRequired,
 };
 
+SearchAppBar.whyDidYouRender = true;
+
 export default withStyles(styles)(SearchAppBar);

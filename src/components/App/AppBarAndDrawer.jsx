@@ -26,4 +26,6 @@ AppBarAndDrawer.propTypes = {
   onSubredditChange: PropTypes.func.isRequired,
 };
 
+AppBarAndDrawer.whyDidYouRender = true;
+
 export default AppBarAndDrawer;

@@ -122,4 +122,6 @@ SubReddit.propTypes = {
   subreddit: PropTypes.string.isRequired
 };
 
+SubReddit.whyDidYouRender = true;
+
 export default memo(SubReddit);
