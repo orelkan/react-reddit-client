@@ -18,7 +18,7 @@ const content = css`
   }
 `;
 const sourceImg = css`
-  max-height: 30em;
+  max-height: 70vh;
   max-width: 100%;
   margin: auto 0;
   display: block;

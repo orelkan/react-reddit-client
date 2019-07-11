@@ -28,9 +28,9 @@ const bigProgress = css`
   margin-top: 3em;
 `;
 
-const ErrorDisplay = () => (
+const ErrorDisplay = ({ error }) => (
   <Typography variant="h3" gutterBottom>
-    No such Subreddit
+    {error.response ? "No such Subreddit" : "Network Error"}
   </Typography>
 );
 
@@ -112,7 +112,7 @@ function SubReddit(props) {
         filter={filter} onSelection={setFilter}/>
       {loadingPosts && <CircularProgress css={bigProgress}/>}
       <PostsList posts={posts} loadingPosts={loadingPosts}/>
-      {error && !loadingPosts && <ErrorDisplay/>}
+      {error && !loadingPosts && <ErrorDisplay error={error}/>}
       {loadingMore && <CircularProgress css={centeredProgress}/>}
     </div>
   );
