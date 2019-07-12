@@ -38,20 +38,31 @@ const text = css`
 function PostMedia({ post, expanded, hasImage, 
   hasVideo, hasEmbed, hasText, htmlEmbed }) {
   
+  // Only renders one content component, depending on the media type
+  function renderContent() {
+    if (hasVideo)
+      return <Video src={post.media.reddit_video.fallback_url}/>;
+    else if (hasEmbed)
+      return <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>;
+    else if (hasImage)
+      return (
+        <AnimatedHover>
+          <img src={post.url} alt='source' css={sourceImg}/>
+        </AnimatedHover>
+      );
+    else if (hasText)
+      return (
+        <Typography variant='h5' css={text}>
+          <Markdown source={he.decode(post.selftext)}/>
+        </Typography>
+      );
+    else return null;
+  }
+
   return (
     <Collapse isOpen={expanded}>
       <div css={content}>
-        {hasImage && 
-        <AnimatedHover>
-          <img src={post.url} alt='source' css={sourceImg}/>
-        </AnimatedHover>}
-        {hasVideo && <Video src={post.media.reddit_video.fallback_url}/>}
-        {hasEmbed && 
-        <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>}
-        {hasText && 
-        <Typography variant='h5' css={text}>
-          <Markdown source={he.decode(post.selftext)}/>
-        </Typography>}
+        {renderContent()}
       </div>
     </Collapse>
   );
