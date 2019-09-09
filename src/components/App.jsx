@@ -63,6 +63,7 @@ function App() {
     body {
       margin: 0;
       background: ${bgColor};
+      word-break: break-word;
     }
     ${themeVariant === 'dark' && linkColor}
   `;
@@ -72,7 +73,7 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <Global styles={global}/>
         <ExpandProvider>
-          <AppBarAndDrawer onSubredditChange={handleSubChange} 
+          <AppBarAndDrawer onSubredditChange={handleSubChange}
             onSelection={setThemeToLocalStorage}/>
           <div css={content}>
             <SubReddit subreddit={subreddit}/>
