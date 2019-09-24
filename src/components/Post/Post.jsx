@@ -50,39 +50,32 @@ function Post({ post, width, growIn = true}) {
   const hasImage = Boolean(['.jpg', '.jpeg', '.gif', '.png']
     .some(ext => urlWithoutQuery.endsWith(ext)));
   const hasText = Boolean(post.selftext && (post.selftext.length > 0));
-  const hasVideo = Boolean(post.media && post.media.reddit_video && 
+  const hasVideo = Boolean(post.media && post.media.reddit_video &&
     post.media.reddit_video.fallback_url);
   const hasEmbed = Boolean(post.media_embed && post.media_embed.content);
   const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
-  
-  // If it's a small screen, removes width and height from the media embed
-  const htmlEmbed = useMemo(() => {
-    const removeWidthIfSmall = hasEmbed && 
-      width <= 768 ? 
-      post.media_embed.content.replace(/width="[0-9]+"/, '')
-        .replace(/height="[0-9]+"/, '') :
-      post.media_embed.content;
-    return hasEmbed && he.decode(removeWidthIfSmall);
-  }, [width, hasEmbed, post]);
+
+  // Avoids decoding when embed doesn't change
+  const htmlEmbed = useMemo(() => hasEmbed && he.decode(post.media_embed.content), [hasEmbed, post]);
 
   return (
     <Grow in={growIn} timeout={500}>
       <Card css={rootCard}>
         <div css={postSummary}>
           <Votes votes={post.ups} />
-          {hasThumbnail && 
-          <Thumbnail src={post.thumbnail} 
+          {hasThumbnail &&
+          <Thumbnail src={post.thumbnail}
             height={post.thumbnail_height} onClick={handleExpanded}/>}
           <TitleAndMetadata post={post}/>
-          {canExpand && 
-          <IconButton css={[exapndIcon, expandIconDirection]} 
+          {canExpand &&
+          <IconButton css={[exapndIcon, expandIconDirection]}
             onClick={handleExpanded} aria-expanded={expanded}>
             <ExpandMoreIcon/>
           </IconButton>}
         </div>
-        {canExpand && 
+        {canExpand &&
         <PostMedia post={post} expanded={expanded} htmlEmbed={htmlEmbed}
-          hasEmbed={hasEmbed} hasImage={hasImage} 
+          hasEmbed={hasEmbed} hasImage={hasImage}
           hasText={hasText} hasVideo={hasVideo} />}
       </Card>
     </Grow>
@@ -91,8 +84,7 @@ function Post({ post, width, growIn = true}) {
 
 Post.propTypes = {
   post: PropTypes.object.isRequired,
-  growIn: PropTypes.bool,
-  width: PropTypes.number.isRequired,
+  growIn: PropTypes.bool
 };
 
 Post.whyDidYouRender = true;

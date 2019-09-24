@@ -11,7 +11,7 @@ import Collapse from '../shared/Collapse';
 const content = css`
   display: flex;
   justify-content: center;
-  padding: 0 2em 1em 2em;  
+  padding: 0 2em 1em 2em;
   @media only screen and (max-width: 768px) {
     padding: 5%;
     padding-top: 0;
@@ -33,17 +33,21 @@ const text = css`
     margin-top: 0;
   }
 `;
+const embed = css`
+  max-width: 100%;
+  display: flex;
+`
 
 // Stateless Component that displays the post media
-function PostMedia({ post, expanded, hasImage, 
+function PostMedia({ post, expanded, hasImage,
   hasVideo, hasEmbed, hasText, htmlEmbed }) {
-  
+
   // Only renders one content component, depending on the media type
   function renderContent() {
     if (hasVideo)
       return <Video src={post.media.reddit_video.fallback_url}/>;
     else if (hasEmbed)
-      return <div dangerouslySetInnerHTML={{__html: htmlEmbed}}/>;
+      return <div css={embed} dangerouslySetInnerHTML={{__html: htmlEmbed}}/>;
     else if (hasImage)
       return (
         <AnimatedHover>
