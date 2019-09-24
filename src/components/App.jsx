@@ -63,7 +63,6 @@ function App() {
     body {
       margin: 0;
       background: ${bgColor};
-      word-break: break-word;
     }
     ${themeVariant === 'dark' && linkColor}
   `;
