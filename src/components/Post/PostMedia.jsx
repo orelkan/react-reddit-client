@@ -36,7 +36,8 @@ const text = css`
 const embed = css`
   max-width: 100%;
   width: 70vw;
-  height: 70vh;
+  height: 80vh;
+  justify-content: center;
   display: flex;
 `;
 
