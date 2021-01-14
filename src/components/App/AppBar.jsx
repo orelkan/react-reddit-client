@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,8 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/ArrowRightAlt';
+import { redditUrl } from '../../consts';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -73,8 +76,21 @@ const styles = theme => ({
   }
 });
 
-function SearchAppBar(props) {
+function AppBar(props) {
   const { classes } = props;
+
+  const [options, setOptions] = useState([]);
+
+  function getOptions(query) {
+    axios
+      .get(`${redditUrl}/api/search_reddit_names.json?query=${query}`)
+      .then(res => {
+        setOptions(res.data.names);
+      })
+      .catch(err => {
+        setOptions([]);
+      });
+  }
 
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -85,7 +101,7 @@ function SearchAppBar(props) {
   
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <MuiAppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <IconButton onClick={props.onMenuClick} 
             className={classes.menuButton} 
@@ -97,31 +113,44 @@ function SearchAppBar(props) {
             React Reddit Client
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Go to subreddit"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              onKeyPress={handleKeyPress}
-            />
-          </div>
+          <Autocomplete 
+            id="subreddit-textbox"
+            options={options}
+            onInputChange={(event, value, reason) => {
+              if (reason === 'input') {
+                getOptions(value);
+              }
+            }}
+            getOptionSelected={(option, value) => option.toLowerCase() === value.toLowerCase()}
+            renderInput={(params) => 
+              <div className={classes.search} ref={params.InputProps.ref}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  {...params.inputProps}
+                  placeholder="Go to subreddit"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  onKeyPress={handleKeyPress}
+                />
+              </div>
+            }
+          />
         </Toolbar>
-      </AppBar>
+      </MuiAppBar>
     </div>
   );
 }
 
-SearchAppBar.propTypes = {
+AppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   onSubredditChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
 };
 
-SearchAppBar.whyDidYouRender = true;
+AppBar.whyDidYouRender = true;
 
-export default withStyles(styles)(SearchAppBar);
+export default withStyles(styles)(AppBar);

@@ -5,10 +5,12 @@ import AppDrawer from './AppDrawer';
 
 function AppBarAndDrawer({onSubredditChange, onSelection}) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+
   function handleSelection(selected) {
     setDrawerOpen(false);
     onSelection(selected);
   }
+  
   return (
     <React.Fragment>
       <AppBar onSubredditChange={onSubredditChange} 

@@ -49,6 +49,9 @@ function App() {
     },
     typography: {
       useNextVariants: true,
+      allVariants: {
+        color: (themeVariant === 'dark') ? 'white' : 'inherit'
+      }
     },
   });
 

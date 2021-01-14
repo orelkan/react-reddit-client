@@ -62,7 +62,8 @@ function Post({ post, width, growIn = true}) {
       post.media_embed.content.replace(/width="[0-9]+"/, '')
         .replace(/height="[0-9]+"/, '') :
       post.media_embed.content;
-    return hasEmbed && he.decode(removeWidthIfSmall);
+    const removeStyle = hasEmbed && removeWidthIfSmall.replace(/style="[a-z:;]+"/, '');
+    return hasEmbed && he.decode(removeStyle);
   }, [width, hasEmbed, post]);
 
   return (
