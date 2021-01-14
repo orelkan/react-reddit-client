@@ -50,7 +50,7 @@ function Post({ post, width, growIn = true}) {
   const hasImage = Boolean(['.jpg', '.jpeg', '.gif', '.png']
     .some(ext => urlWithoutQuery.endsWith(ext)));
   const hasText = Boolean(post.selftext && (post.selftext.length > 0));
-  const hasVideo = Boolean(post.media && post.media.reddit_video && 
+  const hasVideo = Boolean(post.media && post.media.reddit_video &&
     post.media.reddit_video.fallback_url);
   const hasEmbed = Boolean(post.media_embed && post.media_embed.content);
   const canExpand = (hasImage || hasText || hasVideo || hasEmbed);
@@ -71,19 +71,19 @@ function Post({ post, width, growIn = true}) {
       <Card css={rootCard}>
         <div css={postSummary}>
           <Votes votes={post.ups} />
-          {hasThumbnail && 
-          <Thumbnail src={post.thumbnail} 
+          {hasThumbnail &&
+          <Thumbnail src={post.thumbnail}
             height={post.thumbnail_height} onClick={handleExpanded}/>}
           <TitleAndMetadata post={post}/>
-          {canExpand && 
-          <IconButton css={[exapndIcon, expandIconDirection]} 
+          {canExpand &&
+          <IconButton css={[exapndIcon, expandIconDirection]}
             onClick={handleExpanded} aria-expanded={expanded}>
             <ExpandMoreIcon/>
           </IconButton>}
         </div>
-        {canExpand && 
+        {canExpand &&
         <PostMedia post={post} expanded={expanded} htmlEmbed={htmlEmbed}
-          hasEmbed={hasEmbed} hasImage={hasImage} 
+          hasEmbed={hasEmbed} hasImage={hasImage}
           hasText={hasText} hasVideo={hasVideo} />}
       </Card>
     </Grow>
@@ -92,8 +92,7 @@ function Post({ post, width, growIn = true}) {
 
 Post.propTypes = {
   post: PropTypes.object.isRequired,
-  growIn: PropTypes.bool,
-  width: PropTypes.number.isRequired,
+  growIn: PropTypes.bool
 };
 
 Post.whyDidYouRender = true;

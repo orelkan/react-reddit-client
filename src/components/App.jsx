@@ -75,7 +75,7 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <Global styles={global}/>
         <ExpandProvider>
-          <AppBarAndDrawer onSubredditChange={handleSubChange} 
+          <AppBarAndDrawer onSubredditChange={handleSubChange}
             onSelection={setThemeToLocalStorage}/>
           <div css={content}>
             <SubReddit subreddit={subreddit}/>
